@@ -1,0 +1,7 @@
+streamlit        # Streamlit arayüzü
+torch              # PyTorch modeli
+pandas            # Veri işleme
+numpy ==1.23.5            # Sayısal işlemler
+scikit-learn       # Confusion matrix için (isteğe bağlı)
+matplotlib         # Confusion matrix görselleştirme için (isteğe bağlı)
+seaborn        
