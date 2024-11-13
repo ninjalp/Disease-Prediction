@@ -35,9 +35,11 @@ st.markdown("Bu uygulama belirtilerinize göre olası hastalıkları tahmin eder
 st.markdown("---")
 st.subheader("Belirtilerinizi Girin")
 col1, col2 = st.columns(2)  
-# Türkçe belirtiler listesini yükleme
+
+
 with open("symptoms_list_turkish.pkl", "rb") as f:
     symptoms_turkish = pickle.load(f)
+
 symptom_inputs = []
 columns = st.columns(3)  # 3 sütun oluştur
 
@@ -52,11 +54,13 @@ st.markdown("---")
 
 if st.button("Teşhis Et", key="diagnosis_button"):
     
-    input_tensor = torch.tensor([symptom_inputs], dtype=torch.float32)
-    output = model(input_tensor)
-    predicted_class = output.argmax(dim=1).item()
-    
- 
-    st.subheader("Teşhis Sonucu:")
-    st.markdown(f"**Tahmin Edilen Hastalık:** {class_names[predicted_class]}")
-    st.success(f"Modelin tahmin ettiği teşhis: **{class_names[predicted_class]}**")
+    if sum(symptom_inputs) == 0:
+        st.warning("Lütfen en az bir belirti seçiniz!")
+    else:
+        input_tensor = torch.tensor([symptom_inputs], dtype=torch.float32)
+        output = model(input_tensor)
+        predicted_class = output.argmax(dim=1).item()
+        
+        st.subheader("Teşhis Sonucu:")
+        st.markdown(f"**Tahmin Edilen Hastalık:** {class_names[predicted_class]}")
+        st.success(f"Modelin tahmin ettiği teşhis: **{class_names[predicted_class]}**")
